@@ -16,7 +16,6 @@ const CarsByType = () => {
         let code = temp.status
         if (code === 200) {
             setCars(temp);
-            console.log(temp)
         }
     }
     useEffect(() => data, []);

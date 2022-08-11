@@ -19,4 +19,5 @@ export default {
     put: (url, params = {}) => {
         return axios.put(url, params)
       },
+    simple: axios
   }; 

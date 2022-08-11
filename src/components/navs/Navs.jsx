@@ -7,10 +7,9 @@ import AuthLogin from '../auth/AuthLogin';
 
 
 const Navs = () => {
-    const { isAuth, token, login, logout, get_user } = useAuth();
+    const { isAuth, user, login, logout, registration, get_user } = useAuth();
     const [modalShow, setModalShow] = React.useState(false);
     const [typesOfCars, setTypesOfCars] = useState([]);
-    const [user, setUser] = useState();
    
     const data = async() => {
         let temp = await axios.get(
@@ -18,7 +17,6 @@ const Navs = () => {
         );
         temp = temp.data.results;
         setTypesOfCars(temp);
-        isAuth ? setUser(await get_user()) : setUser(null);
     }
 
     useEffect(() => data, []);
@@ -40,7 +38,7 @@ const Navs = () => {
                         ? <Nav.Link href="/profile">{user?.username}</Nav.Link>
                         : <Nav.Link onClick={() => setModalShow(true)}>Войти</Nav.Link>}
                     {isAuth 
-                        ? <Nav.Link onClick={e => {logout(); window.location.reload();}}>Выйти</Nav.Link> 
+                        ? <Nav.Link onClick={e => {logout()}}>Выйти</Nav.Link> 
                         : <Nav.Link href="/registration">Зарегистрироваться</Nav.Link>}
                     
                 </Nav>
@@ -56,8 +54,7 @@ const Navs = () => {
                 </Navbar.Collapse>
             </Container>
         </Navbar>
-
-        <AuthLogin show={modalShow} onHide={() => setModalShow(false)}/>
+        <AuthLogin show={modalShow} onHide={() => setModalShow(false)} />
     </>
   )
 }

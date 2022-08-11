@@ -10,12 +10,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import useAuth from '../../hooks/useAuth';
 
 function Main() {
-  const { isAuth, token, login, logout } = useAuth();
   return (
     <BrowserRouter>
       <Routes>
           <Route path="/" element={<Content />} />
-          <Route path="/profile" element={isAuth ?<Profile /> :<NotFoundPage/>} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/cars/:id" element={<ItemCar />} />
           <Route path="/registration" element={<Registration/>} />
           <Route path="/types_of_cars/:id" element={<CarsByType />} />

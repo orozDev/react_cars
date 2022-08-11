@@ -1,28 +1,31 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Button, Modal, Form, InputGroup} from 'react-bootstrap';
 import useAuth from '../../hooks/useAuth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faCircleExclamation, faUser, faKey } from '@fortawesome/free-solid-svg-icons'
+import { faCircleExclamation, faUser, faKey } from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap/dist/css/bootstrap.css';
 
 const AuthLogin = (props) => {
 
-    const { isAuth, token, login, logout } = useAuth();
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
+    const { isAuth, currentUser, login, logout } = useAuth();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [message, setMessage] = useState(null);
+
     const authentification = async (e) => {
         e.preventDefault();
-        let response = await login(username, password)
-        if(response.isAuth) {
-            setUsername(null);
-            setPassword(null);
-            props.onHide();
-            window.location.reload();
-        } else {
-            setMessage('Не верный пароль или не существует пользователя!');
-        }  
-    };
+        await login(username, password)
+        .then(data => {
+            if(data.isAuth) {
+                setUsername('');
+                setPassword('');
+                props.onHide();
+                window.location.reload();
+            } else {
+                setMessage('Не верный пароль или не существует пользователя!');
+            } 
+        })
+    }
 
 
   return (
